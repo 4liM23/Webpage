@@ -6,7 +6,7 @@
 
         <script>
             function changeBar(barId, heightValue){
-                onclick=document.getElementById(barId+'_bar').style.height=heightValue+'px'; if(heightValue>=15){document.getElementById(barId+'_text').style.display='block'; document.getElementById(barId+'_text').innerHTML=heightValue}else{document.getElementById(barId+'_text').style.display='none'};
+                document.getElementById(barId+'_bar').style.height=heightValue+'px'; if(heightValue>=15){document.getElementById(barId+'_text').style.display='block'; document.getElementById(barId+'_text').innerHTML=heightValue}else{document.getElementById(barId+'_text').style.display='none'};
             }
 
         </script>
@@ -41,9 +41,11 @@
                 background-color: red;
             }
             #red_text {
+                font-family:sans-serif;
                 display: block
             }
             #blue_text {
+                font-family:sans-serif;
                 display: block
             }
             .bar {
