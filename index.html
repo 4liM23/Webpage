@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>
+            First Page
+        </title>
+        <style>
+            .red {
+                color:red;
+            }
+            .blue {
+                color: blue;
+            }
+            .bg_blue{
+                background-color: blue;
+            }
+            .bg_red{
+                background-color: red;
+            }
+            .inner {
+                position:relative;
+                font-size: 30px;
+                display: inline-block;
+                width: 400px;
+                text-align:center;
+                padding:5px;
+            }
+            #blue_box {
+                height: 100px;
+                background-color: blue;
+            }
+            #red_box {
+                height: 100px;
+                background-color: red;
+            }
+            .box {
+                position: absolute;
+                bottom:0px;
+                width: 30px;
+                margin-left: 10px;
+                display: table-row;
+            }
+            #container {
+                width:500px;
+                height:500px;
+                position:absolute;
+                left:40%;
+                text-align: center;
+                display:block;
+                border-left: 3px solid black;
+                border-bottom: 3px solid black;
+            }
+            
+
+        </style>
+
+
+
+
+    </head>
+    <body>
+        <label for="blue_box">Blue height</label>
+        <input type="number" min="0" max="300" step="5" value="0" onclick="document.getElementById('blue_box').style.height=this.value;">
+        <br><br>
+        <label for="red_box">Red height</label>
+        <input type="number" min="0" max="300" step="5" value="0" onclick="red_box.style.height=this.value">
+        
+
+
+        <div id="container">
+
+            <div id="blue_box" class="box" style="position: absolute;"></div>
+
+
+
+            <div id="red_box" class="box" style="height: 10 px; left: 50px;"></div>
+
+
+
+
+        </div>
+
+
+    </body>
