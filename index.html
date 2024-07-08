@@ -1,8 +1,16 @@
 <html>
     <head>
         <title>
-            First Page
+            A really Cool Page!!
         </title>
+
+        <script>
+            function changeBar(barId, heightValue){
+                onclick=document.getElementById(barId+'_bar').style.height=heightValue+'px'; if(heightValue>=15){document.getElementById(barId+'_text').style.display='block'; document.getElementById(barId+'_text').innerHTML=heightValue}else{document.getElementById(barId+'_text').style.display='none'};
+            }
+
+        </script>
+
         <style>
             .red {
                 color:red;
@@ -24,16 +32,23 @@
                 text-align:center;
                 padding:5px;
             }
-            #blue_box {
+            #blue_bar {
                 height: 100px;
                 background-color: blue;
             }
-            #red_box {
+            #red_bar {
                 height: 100px;
                 background-color: red;
             }
-            .box {
+            #red_text {
+                display: block
+            }
+            #blue_text {
+                display: block
+            }
+            .bar {
                 position: absolute;
+                color: #fff;
                 bottom:0px;
                 width: 30px;
                 margin-left: 10px;
@@ -58,21 +73,26 @@
 
     </head>
     <body>
-        <label for="blue_box">Blue height</label>
-        <input type="number" min="0" max="300" step="5" value="0" onclick="document.getElementById('blue_box').style.height=this.value;">
+        <label for="blue_bar">Blue height</label>
+        <input type="number" min="0" max="300" step="5" value="100" onclick="changeBar('blue', this.value)">
         <br><br>
-        <label for="red_box">Red height</label>
-        <input type="number" min="0" max="300" step="5" value="0" onclick="red_box.style.height=this.value">
+        <label for="red_bar">Red height</label>
+        <input type="number" min="0" max="300" step="5" value="100" onclick="changeBar('red', this.value)">
         
 
 
         <div id="container">
 
-            <div id="blue_box" class="box" style="position: absolute;"></div>
+            
+            <div id="blue_bar" class="bar" style="position: absolute;">
+                <div id="blue_text">100</div>
+            </div>
 
 
 
-            <div id="red_box" class="box" style="height: 10 px; left: 50px;"></div>
+            <div id="red_bar" class="bar" style="height: 10 px; left: 50px;">
+                <div id="red_text">100</div>
+            </div>
 
 
 
