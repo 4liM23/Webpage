@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>
+            A really Cool Page!!
+        </title>
+
+        <script>
+            function changeBar(barId, heightValue){
+                document.getElementById(barId+'_bar').style.height=heightValue+'px'; if(heightValue>=15){document.getElementById(barId+'_text').style.display='block'; document.getElementById(barId+'_text').innerHTML=heightValue}else{document.getElementById(barId+'_text').style.display='none'};
+            }
+
+        </script>
+
+        <style>
+            .red {
+                color:red;
+            }
+            .blue {
+                color: blue;
+            }
+            .bg_blue{
+                background-color: blue;
+            }
+            .bg_red{
+                background-color: red;
+            }
+            .inner {
+                position:relative;
+                font-size: 30px;
+                display: inline-block;
+                width: 400px;
+                text-align:center;
+                padding:5px;
+            }
+            #blue_bar {
+                height: 100px;
+                background-color: blue;
+            }
+            #red_bar {
+                height: 100px;
+                background-color: red;
+            }
+            #red_text {
+                font-family:sans-serif;
+                display: block
+            }
+            #blue_text {
+                font-family:sans-serif;
+                display: block
+            }
+            .bar {
+                position: absolute;
+                color: #fff;
+                bottom:0px;
+                width: 30px;
+                margin-left: 10px;
+                display: table-row;
+            }
+            #container {
+                width:500px;
+                height:500px;
+                position:absolute;
+                left:40%;
+                text-align: center;
+                display:block;
+                border-left: 3px solid black;
+                border-bottom: 3px solid black;
+            }
+            
+
+        </style>
+
+
+
+
+    </head>
+    <body>
+        <label for="blue_bar">Blue height</label>
+        <input type="number" min="0" max="300" step="5" value="100" onclick="changeBar('blue', this.value)">
+        <br><br>
+        <label for="red_bar">Red height</label>
+        <input type="number" min="0" max="300" step="5" value="100" onclick="changeBar('red', this.value)">
+        
+
+
+        <div id="container">
+
+            
+            <div id="blue_bar" class="bar" style="position: absolute;">
+                <div id="blue_text">100</div>
+            </div>
+
+
+
+            <div id="red_bar" class="bar" style="height: 10 px; left: 50px;">
+                <div id="red_text">100</div>
+            </div>
+
+
+
+
+        </div>
+
+
+    </body>
