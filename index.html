@@ -17,7 +17,7 @@
             var startX = 100;
             var startY = 100;
             function drawSquare(x, y){
-                var points = startX+','+startY+' '+x+','+startY+' '+(x+((x-startX)*0.5))+','+(y-((y-startY)*0.5))+' '+x+','+y+' '+startX+','+y+' '+(startX-((x-startX)*0.5))+','+(y-((y-startY)*0.5))+' '
+                var points = startX+','+startY+' '+x+','+startY+' '+(x+((x-startX)*0.5))+','+(y-j((y-startY)*0.5))+' '+x+','+y+' '+startX+','+y+' '+(startX-((x-startX)*0.5))+','+(y-((y-startY)*0.5))+' '
 
                 document.getElementById('square').innerHTML='<svg viewport="-12 -12 1000 1000" width="1000px" height="1000px"><defs><filter id="shadow" x="-15" y="-20" width="1000px" height="1000px"><feOffset result="offOut" in="SourceAlpha" dx="2" dy="2"/><feGaussianBlur result ="BlurOUt" in="offOut" stddeviation="2"/><feBlend in="SourceGraphic" in2="blurOut" mode="normal"/></filter></defs><polygon z-index="2" points="'+points+'" stroke="#F00" stroke-width="3" fill="none" filter="url(#shadow)"/></svg>';
             }
