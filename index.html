@@ -1,52 +1,72 @@
 <html>
     <head>
-        <title>
-            SVG Webpage
-        </title>
+        <title>Hello</title>
+
         <style>
-            #screen{
-                background-color:antiquewhite;
-                height: 1000px;
-                width: 1000px;
-                position: absolute;
-                display: inline-block;
 
-            }
+
         </style>
+
         <script>
-            var startX = 100;
-            var startY = 100;
-            function drawSquare(x, y){
-                var points = startX+','+startY+' '+x+','+startY+' '+(x+((x-startX)*0.5))+','+(y-j((y-startY)*0.5))+' '+x+','+y+' '+startX+','+y+' '+(startX-((x-startX)*0.5))+','+(y-((y-startY)*0.5))+' '
-
-                document.getElementById('square').innerHTML='<svg viewport="-12 -12 1000 1000" width="1000px" height="1000px"><defs><filter id="shadow" x="-15" y="-20" width="1000px" height="1000px"><feOffset result="offOut" in="SourceAlpha" dx="2" dy="2"/><feGaussianBlur result ="BlurOUt" in="offOut" stddeviation="2"/><feBlend in="SourceGraphic" in2="blurOut" mode="normal"/></filter></defs><polygon z-index="2" points="'+points+'" stroke="#F00" stroke-width="3" fill="none" filter="url(#shadow)"/></svg>';
-            }
-
-
-            function drawPath(x, y){
-                document.getElementById('points').innerHTML+=x+','+y+';';
-                var pathPoints = document.getElementById('points').innerHTML.split(';');
-                var pathToDate = "";
-                for (i = 0; i < pathPoints.length; i++) {
-                    pathToDate+=' L '+pathPoints[i]
+            var player;
+            var score;
+            var obstacles=[];
+            var gameArea = {
+                canvas : document.createElement("canvas"),
+                start : function() {
+                    this.canvas.width = 480;
+                    this.canvas.height = 270;
+                    this.canvas.context = this.canvas.getContext('2d');
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.frameNo=0;
+                    this.interval=setInterval(updateGameArea, 20);
+                },
+                clear : function() {
+                    this.canvas.context.clearRect(0,0 , this.canvas.width,this.canvas.height);
                 }
 
-                document.getElementById('line').innerHTML='<svg viewport="-12 -12 1000 1000" width="1000px" height="1000px"><defs><filter id="shadow" x="-15" y="-20" width="1000px" height="1000px"><feOffset result="offOut" in="SourceAlpha" dx="2" dy="2"/><feGaussianBlur result ="BlurOUt" in="offOut" stddeviation="2"/><feBlend in="SourceGraphic" in2="blurOut" mode="normal"/></filter><marker id="arrowhead" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M 0,0 L 0,6 L 6,3 z" fill="#00F"/></marker></defs><path d="M 0, 0'+pathToDate+'" stroke="#00F" stroke-width="3" fill="none" marker-end="url(#arrowhead)" filter="url(#shadow)"/></svg>';
             }
+            function component(width,height,color,x,y,type){
+                this.type = type;
+                this.width = width;
+                this.heigth = height;
+                this.x = x;
+                this.y = y;
+                this.update = function() {
+                    ctx = gameArea.canvas.context;
+                    ctx.fillStyle = color;
+                    ctx.fillRect(this.x,this.y , this.width,this.height);
+                }
+            }
+
+            function startGame(){
+                accelerate.style.display='block';
+                restart.style.display='block';
+                player = new component(30, 30, 'red', 10, 120, 'bird');
+                gameArea.start();
+
+            }
+            
+            function updateGameArea() {
+                var x;
+                var height;
+                var gap;
+                gameArea.clear();
+                gameArea.frameNo++;
+                player.update();
+            }
+
         </script>
     </head>
+
+
     <body>
         
-        <div id="screen" onclick="drawPath(event.pageX, event.pageY); startX=event.pageX; startY=event.pageY; drawSquare(event.pagex, event.pageY)" onmousemove="drawSquare(event.pageX, event.pageY)">
-            <div id="points"></div>
-            <div id="line" style="position: absolute; display: inline-block;" width="100%" height="100%"></div>
-            <div id="square" style="position: absolute; display: inline-block;">
-
-
-            </div>
-            </svg>
-            
-        </div>
+        <button  onclick="this.style.display='none'; startGame();">Start</button>
+        <br/>
+        <button id="accelerate" style="display: none;" onclick="">Accelerate</button>
+        <br/>
+        <button id="restart" style="display: none;" onclick="">Restart</button>
 
 
     </body>
