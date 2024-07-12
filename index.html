@@ -1,7 +1,6 @@
 <html>
     <head>
-        <title>Hello</title>
-
+        <title>Flappy bird</title>
         <style>
 
 
@@ -29,45 +28,137 @@
             function component(width,height,color,x,y,type){
                 this.type = type;
                 this.width = width;
-                this.heigth = height;
+                this.height = height;
+                this.gravityspeed = 0;
+                this.gravity = 0;
+                this.speedx = 0;
+                this.speedy = 0;
                 this.x = x;
                 this.y = y;
                 this.update = function() {
                     ctx = gameArea.canvas.context;
+                    if (this.type=='text'){
+                    ctx.font = this.width + '' + this.height;
+                    ctx.fillStyle = color;
+                    ctx.fillText(this.text, this.x, this.y)
+                    }
+                    else {
                     ctx.fillStyle = color;
                     ctx.fillRect(this.x,this.y , this.width,this.height);
+                    }
+                }
+                this.hitBottom = function() {
+                    rockBottom = gameArea.canvas.height-this.height;
+                    if (this.y > rockBottom){
+                    this.gravityspeed = 0;
+                    this.y=rockBottom;
+                    }   
+                }
+                this.crash = function(object) {
+                    var flag = true;
+                    var myLeft = this.x;
+                    var myRight = this.x+this.width;
+                    var myTop = this.y;
+                    var myBottom = this.y+this.height;
+                    var otherLeft = object.x;
+                    var otherRight = object.x+object.width;
+                    var otherTop = object.y;
+                    var otherBottom = object.y+object.height;
+
+                    if ((myBottom < otherTop) || (myTop > otherBottom) || (myRight < otherLeft) || (myLeft > otherRight)){
+                        flag=false;
+                    }
+                    return flag
+                }
+                
+                
+                this.newpos = function() {
+                    this.gravityspeed+=this.gravity;
+                    this.hitBottom();
+                    this.x += this.speedx;
+                    this.y += this.speedy + this.gravityspeed;
                 }
             }
 
             function startGame(){
                 accelerate.style.display='block';
                 restart.style.display='block';
-                player = new component(30, 30, 'red', 10, 120, 'bird');
+                player = new component(25, 25, 'red', 10, 120, 'bird');
+                player.gravity=0.05;
+                scoreText = new component('30px', 'aerial', 'black', 300, 40, 'text')
                 gameArea.start();
-
+                
+            }
+            function restartGame(){
+                accelerate.style.display='block';
+                restart.style.display='block';
+                obstacles = [];
+                score = 0;
+                gameArea.frameNo = 0;
+                clearInterval(gameArea.interval);
+                player = new component(25, 25, 'red', 10, 120, 'bird');
+                player.gravity=0.05;
+                scoreText = new component('30px', 'aerial', 'black', 300, 40, 'text')
+                gameArea.start();
+                
             }
             
             function updateGameArea() {
-                var x;
-                var height;
-                var gap;
+                var x, height, minHeight, maxHeight, gap, minGap, maxGap;
+                if (obstacles.length!=0){
+                    for (i = 0; i < obstacles.length; i++){
+                        if (player.crash(obstacles[i])){
+                            return
+                        }
+                    }
+                }
+
                 gameArea.clear();
                 gameArea.frameNo++;
+                if (player.flag==true){
+                    score++;
+                }
+                if (gameArea.frameNo==1 || gameArea.frameNo%120==0){
+                    x=gameArea.canvas.width;
+                    minHeight=20;
+                    maxHeight=200;
+                    height=Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+                    minGap=50;
+                    maxGap=200;
+                    gap=Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+                    obstacles.push(new component(10, height, 'green', x, 0));
+                    obstacles.push(new component(10, x-height-gap, 'green', x, height+gap));
+                }
+                for (i = 0; i < obstacles.length; i++){
+                    obstacles[i].x--;
+                    obstacles[i].update();
+                }
+                player.newpos();
                 player.update();
+                scoreText.text = 'Score: '+gameArea.frameNo;
+                scoreText.update();
+            }
+            function acceleration(n) {
+                player.gravity=n;
             }
 
         </script>
     </head>
 
-
     <body>
-        
-        <button  onclick="this.style.display='none'; startGame();">Start</button>
+
+        <button class="button" id="start" onclick="this.style.display='none'; startGame();">start</button>
         <br/>
-        <button id="accelerate" style="display: none;" onclick="">Accelerate</button>
+        <button class="button" id="accelerate" style="display: none;" onmousedown="acceleration(-0.2)" onmouseup="acceleration(0.05)">accelerate</button>
         <br/>
-        <button id="restart" style="display: none;" onclick="">Restart</button>
+        <button class="button" id="restart" style="display: none;" onclick="restartGame()">restart</button>
 
 
     </body>
+
+
 </html>
+
+
+
+
